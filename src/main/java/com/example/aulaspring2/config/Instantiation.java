@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.aulaspring2.dto.AuthorDTO;
+import com.example.aulaspring2.dto.CommentDTO;
 import com.example.aulaspring2.entities.Post;
 import com.example.aulaspring2.entities.User;
 import com.example.aulaspring2.repositories.PostRepository;
@@ -42,13 +43,21 @@ public class Instantiation implements CommandLineRunner {
 		Post post2 = new Post(null, sdf.parse("25/02/2021"), "Foto Estrelada", "Melhores fotos", new AuthorDTO(maria));
 		Post post3 = new Post(null, sdf.parse("30/03/2021"), "Carro do ano", "Rapido com nunca", new AuthorDTO(bob));
 		
-
+		CommentDTO c1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/05/2021"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite!", sdf.parse("23/05/2021"), new AuthorDTO(alex));
+		CommentDTO c3 = new CommentDTO("Aproveite!", sdf.parse("22/05/2021"), new AuthorDTO(alex));
+		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
 		
 		maria.getPosts().addAll(Arrays.asList(post1, post2));
 		bob.getPosts().addAll(Arrays.asList(post3));
 		
 		userRepository.saveAll(Arrays.asList(maria, bob));
+		
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().addAll(Arrays.asList(c3));
+		
+		postRepository.saveAll(Arrays.asList(post1, post2));
 	}
 
 }
